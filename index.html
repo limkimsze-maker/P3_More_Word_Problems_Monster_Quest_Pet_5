@@ -941,7 +941,6 @@
     max-width:none !important;
     height:274px !important;
     margin:0 0 -106px 0 !important;
-    transform:scale(.55) !important;
     transform-origin:top left !important;
     overflow:visible !important;
   }
@@ -1142,10 +1141,10 @@
                               <polygon points="0,0 6,3 0,6" fill="#1c5a7d"></polygon>
                             </marker>
                           </defs>
-                          <line class="flowArrow" x1="182" y1="96" x2="304" y2="96"></line>
-                          <line class="flowArrow" x1="436" y1="96" x2="558" y2="96"></line>
-                          <line class="flowArrow" x1="304" y1="134" x2="182" y2="134"></line>
-                          <line class="flowArrow" x1="538" y1="134" x2="416" y2="134"></line>
+                          <line class="flowArrow" x1="166" y1="96" x2="268" y2="96"></line>
+                          <line class="flowArrow" x1="400" y1="96" x2="502" y2="96"></line>
+                          <line class="flowArrow" x1="268" y1="134" x2="166" y2="134"></line>
+                          <line class="flowArrow" x1="502" y1="134" x2="400" y2="134"></line>
                         </svg>
 
                         <div class="node" id="nodeFirst" style="left:42px; top:42px;">
@@ -1159,10 +1158,10 @@
                         </div>
                         <div class="nodeLabel" style="top:172px; width:110px; left:102px;">At First</div>
 
-                        <div class="arrowLabelSlot" id="slot_top_left" style="left:184px; top:34px;"></div>
-                        <div class="arrowLabelSlot" id="slot_top_right" style="left:418px; top:34px;"></div>
-                        <div class="arrowLabelSlot" id="slot_bottom_left" style="left:184px; top:162px;"></div>
-                        <div class="arrowLabelSlot" id="slot_bottom_right" style="left:418px; top:162px;"></div>
+                        <div class="arrowLabelSlot" id="slot_top_left" style="left:171px; top:34px;"></div>
+                        <div class="arrowLabelSlot" id="slot_top_right" style="left:405px; top:34px;"></div>
+                        <div class="arrowLabelSlot" id="slot_bottom_left" style="left:171px; top:162px;"></div>
+                        <div class="arrowLabelSlot" id="slot_bottom_right" style="left:405px; top:162px;"></div>
                       </div>
 
                       <div class="eqBox">
@@ -1536,6 +1535,28 @@
   }
   [els.slot_top_left, els.slot_top_right, els.slot_bottom_left, els.slot_bottom_right].forEach(bindArrowSlot);
 
+  function fitFlowWrapForPhone(){
+    if(!document.documentElement.classList.contains('mq-stage5-phone')) return;
+    const flow = document.querySelector('.flowWrap');
+    const holder = flow && flow.parentElement;
+    if(!flow || !holder) return;
+
+    const available = Math.max(260, holder.getBoundingClientRect().width - 12);
+    // Visible model content ends at about x=622; use 650 for a little breathing room.
+    const contentWidth = 650;
+    const scale = Math.min(0.60, Math.max(0.40, available / contentWidth));
+    const visibleWidth = contentWidth * scale;
+    const left = Math.max(0, (available - visibleWidth) / 2);
+
+    flow.style.setProperty('transform', `scale(${scale})`, 'important');
+    flow.style.setProperty('margin-left', `${Math.round(left)}px`, 'important');
+
+    const visibleHeight = 274 * scale;
+    // Collapse the unused layout height created by transform scaling.
+    const bottom = Math.round(visibleHeight - 274 + 18);
+    flow.style.setProperty('margin-bottom', `${bottom}px`, 'important');
+  }
+
   function fitToViewport(){
     const vp = els.fitViewport;
     const stage = els.fitStage;
@@ -1546,6 +1567,7 @@
       stage.style.transform = 'none';
       stage.style.left = '0px';
       stage.style.top = '0px';
+      fitFlowWrapForPhone();
       return;
     }
 
@@ -1770,7 +1792,7 @@ ${problems.join('\n')}`, false);
   els.btnNew.addEventListener('click', ()=>{ clearTimeout(stageCompleteTimer); stageCompleteSent = false; solvedCount = 0; actionMode = 'check'; showSolvePage(); state = makeVariation(); renderProblemText(); renderLabelBank(); resetInputs(); fitToViewport(); clearWorking(); });
   els.btnCheck.addEventListener('click', check);
   els.btnRewardPlayAgain.addEventListener('click', ()=>signalStageComplete(5));
-  window.addEventListener('resize', ()=>{ fitToViewport(); resizeConfetti(); });
+  window.addEventListener('resize', ()=>{ fitToViewport(); fitFlowWrapForPhone(); resizeConfetti(); });
 
   /* Working canvas */
   const canvas = document.getElementById('workCanvas');
@@ -1818,6 +1840,7 @@ ${problems.join('\n')}`, false);
     renderLabelBank();
     resetInputs();
     fitToViewport();
+    fitFlowWrapForPhone();
   }, 50);
 })();
 </script>
