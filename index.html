@@ -740,6 +740,317 @@
       }
     }
   </style>
+
+<script id="stage5-real-phone-detector">
+(function(){
+  function smallestViewport(){
+    const vals=[];
+    try{ if(window.innerWidth) vals.push(window.innerWidth); }catch(e){}
+    try{ if(document.documentElement.clientWidth) vals.push(document.documentElement.clientWidth); }catch(e){}
+    try{ if(window.visualViewport && window.visualViewport.width) vals.push(window.visualViewport.width); }catch(e){}
+    try{ if(window.top && window.top.innerWidth) vals.push(window.top.innerWidth); }catch(e){}
+    try{ if(window.screen && window.screen.width) vals.push(window.screen.width); }catch(e){}
+    return vals.length ? Math.min.apply(null, vals) : 9999;
+  }
+
+  function applyStage5PhoneMode(){
+    document.documentElement.classList.toggle('mq-stage5-phone', smallestViewport() <= 1100);
+  }
+
+  applyStage5PhoneMode();
+  window.addEventListener('resize', applyStage5PhoneMode);
+  window.addEventListener('orientationchange', applyStage5PhoneMode);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', applyStage5PhoneMode);
+  }
+  try{
+    if(window.top && window.top !== window){
+      window.top.addEventListener('resize', applyStage5PhoneMode);
+    }
+  }catch(e){}
+})();
+</script>
+
+<style id="stage5-match-stage1-mobile-layout">
+  html.mq-stage5-phone,
+  html.mq-stage5-phone body{
+    height:auto !important;
+    min-height:100% !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  html.mq-stage5-phone body{
+    padding-bottom:calc(120px + env(safe-area-inset-bottom)) !important;
+    touch-action:pan-y !important;
+  }
+
+  html.mq-stage5-phone .app{
+    width:100% !important;
+    height:auto !important;
+    min-height:100dvh !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  html.mq-stage5-phone .main{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto auto !important;
+    gap:12px !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-height:0 !important;
+    padding:8px !important;
+    overflow:visible !important;
+  }
+
+  html.mq-stage5-phone .main > .card,
+  html.mq-stage5-phone #toolsCard{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:0 !important;
+    overflow:visible !important;
+    grid-column:1 !important;
+  }
+
+  html.mq-stage5-phone .leftBd{
+    flex:none !important;
+    position:relative !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:8px !important;
+    overflow:visible !important;
+  }
+
+  html.mq-stage5-phone .fitViewport{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+
+  html.mq-stage5-phone .fitStage{
+    position:relative !important;
+    left:0 !important;
+    top:0 !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    transform:none !important;
+    transform-origin:top left !important;
+  }
+
+  html.mq-stage5-phone .questionShell{
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:8px !important;
+    overflow:visible !important;
+    border-radius:22px !important;
+  }
+
+  /* Stage 5 pet remains invisible until completion. */
+  html.mq-stage5-phone .rewardPage{
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:8px !important;
+    overflow:visible !important;
+    border-radius:22px !important;
+  }
+  html.mq-stage5-phone .rewardPage[hidden]{
+    display:none !important;
+  }
+  html.mq-stage5-phone .rewardPage:not([hidden]).show{
+    display:flex !important;
+  }
+
+  html.mq-stage5-phone .boardGrid{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+  }
+
+  html.mq-stage5-phone .introPanel,
+  html.mq-stage5-phone .mainPanel{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 0 12px !important;
+    padding:12px !important;
+    overflow:visible !important;
+    position:relative !important;
+  }
+
+  html.mq-stage5-phone .middleFrame{
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:10px !important;
+    overflow:visible !important;
+  }
+
+  html.mq-stage5-phone .mainInner{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    gap:16px !important;
+  }
+
+  html.mq-stage5-phone .leftSolve,
+  html.mq-stage5-phone .rightSolve{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    height:auto !important;
+  }
+
+  html.mq-stage5-phone .rightSolve{
+    padding:12px !important;
+  }
+
+  html.mq-stage5-phone .questionTitleBox,
+  html.mq-stage5-phone .missionBottom,
+  html.mq-stage5-phone .toolRow{
+    flex-wrap:wrap !important;
+  }
+
+  html.mq-stage5-phone .problemText{
+    font-size:18px !important;
+    line-height:1.35 !important;
+  }
+
+  /* Keep the flow-model geometry intact, but scale only the diagram. */
+  html.mq-stage5-phone .flowWrap{
+    width:760px !important;
+    max-width:none !important;
+    height:274px !important;
+    margin:0 0 -106px 0 !important;
+    transform:scale(.55) !important;
+    transform-origin:top left !important;
+    overflow:visible !important;
+  }
+
+  /* Equations stay on one horizontal line as much as possible. */
+  html.mq-stage5-phone .eqBox{
+    width:100% !important;
+    max-width:100% !important;
+    flex-wrap:nowrap !important;
+    justify-content:center !important;
+    gap:4px !important;
+    padding:10px 6px !important;
+    font-size:17px !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  html.mq-stage5-phone .eqBox .blankInput{
+    width:62px !important;
+    height:38px !important;
+    padding:0 4px !important;
+    font-size:16px !important;
+    flex:0 0 62px !important;
+  }
+
+  html.mq-stage5-phone .eqBox .blankInput.long{
+    width:78px !important;
+    flex-basis:78px !important;
+  }
+
+  html.mq-stage5-phone .eqBox .opSlot{
+    width:34px !important;
+    height:34px !important;
+    flex:0 0 34px !important;
+    font-size:18px !important;
+  }
+
+  html.mq-stage5-phone .sentence,
+  html.mq-stage5-phone .rightSolvePrompt{
+    font-size:20px !important;
+    line-height:1.35 !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  html.mq-stage5-phone .controlsFrame{
+    display:block !important;
+    width:100% !important;
+    min-height:0 !important;
+    margin:8px 0 0 !important;
+    position:relative !important;
+  }
+
+  html.mq-stage5-phone .controlsFrameInner{
+    width:100% !important;
+    padding:10px !important;
+    flex-wrap:wrap !important;
+  }
+
+  /* Working Space follows the activity at full width. */
+  html.mq-stage5-phone #toolsCard{
+    min-height:520px !important;
+    margin:0 0 calc(70px + env(safe-area-inset-bottom)) !important;
+  }
+
+  html.mq-stage5-phone #workPanelBd{
+    height:auto !important;
+    min-height:440px !important;
+    overflow:visible !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  html.mq-stage5-phone .workCard{
+    flex:0 0 auto !important;
+    min-height:430px !important;
+    height:auto !important;
+  }
+
+  html.mq-stage5-phone .workCanvasWrap{
+    flex:0 0 auto !important;
+    min-height:340px !important;
+    height:340px !important;
+  }
+
+  html.mq-stage5-phone #workCanvas{
+    width:100% !important;
+    height:340px !important;
+    min-height:340px !important;
+    display:block !important;
+    pointer-events:auto !important;
+    touch-action:none !important;
+  }
+
+  html.mq-stage5-phone .workFeedbackFrame{
+    flex:0 0 auto !important;
+    min-height:150px !important;
+  }
+
+  html.mq-stage5-phone .footer{
+    width:100% !important;
+    flex-wrap:wrap !important;
+    margin-bottom:calc(24px + env(safe-area-inset-bottom)) !important;
+  }
+
+  html.mq-stage5-phone .back-main-btn{
+    bottom:calc(84px + env(safe-area-inset-bottom)) !important;
+  }
+</style>
+
 </head>
 <body>
 <a class="back-main-btn" href="#" data-stage-return="5">Back to Main Page</a>
@@ -1023,6 +1334,8 @@
   let dragLabelValue = '';
 
   function clearWorking(){
+    drawing = false;
+    last = null;
     const r = canvas.getBoundingClientRect();
     ctx.clearRect(0,0,r.width,r.height);
   }
@@ -1228,6 +1541,14 @@
     const stage = els.fitStage;
     const shell = (!els.rewardPage.hidden && els.rewardPage.classList.contains('show')) ? els.rewardPage : els.questionShell;
     if(!vp || !stage || !shell) return;
+
+    if(document.documentElement.classList.contains('mq-stage5-phone')){
+      stage.style.transform = 'none';
+      stage.style.left = '0px';
+      stage.style.top = '0px';
+      return;
+    }
+
     const vw = vp.clientWidth;
     const vh = vp.clientHeight;
     const sw = shell.offsetWidth;
@@ -1446,8 +1767,7 @@ ${problems.join('\n')}`, false);
     }
   }
 
-  els.btnNew.addEventListener('click', ()=>{ clearTimeout(stageCompleteTimer); stageCompleteSent = false; solvedCount = 0; state = makeVariation(); renderProblemText(); renderLabelBank(); resetInputs(); fitToViewport(); clearWorking(); });
-  els.btnNew.addEventListener('click', ()=>{ clearTimeout(stageCompleteTimer); stageCompleteSent = false; state = makeVariation(); renderProblemText(); renderLabelBank(); resetInputs(); fitToViewport(); });
+  els.btnNew.addEventListener('click', ()=>{ clearTimeout(stageCompleteTimer); stageCompleteSent = false; solvedCount = 0; actionMode = 'check'; showSolvePage(); state = makeVariation(); renderProblemText(); renderLabelBank(); resetInputs(); fitToViewport(); clearWorking(); });
   els.btnCheck.addEventListener('click', check);
   els.btnRewardPlayAgain.addEventListener('click', ()=>signalStageComplete(5));
   window.addEventListener('resize', ()=>{ fitToViewport(); resizeConfetti(); });
@@ -1487,10 +1807,7 @@ ${problems.join('\n')}`, false);
   canvas.addEventListener('touchstart', startDraw, {passive:false});
   canvas.addEventListener('touchmove', moveDraw, {passive:false});
   window.addEventListener('touchend', endDraw, {passive:false});
-  document.getElementById('btnWorkClearTop').addEventListener('click', ()=>{
-    const r = canvas.getBoundingClientRect();
-    ctx.clearRect(0,0,r.width,r.height);
-  });
+  document.getElementById('btnWorkClearTop').addEventListener('click', clearWorking);
   window.addEventListener('resize', resizeCanvas);
 
   setTimeout(()=>{
